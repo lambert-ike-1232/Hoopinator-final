@@ -27,24 +27,24 @@ en = 24
 d = 2.7559055
 
 # initialize values
-velCurr = 0
-posCurr = 0
-posLast = 0
-tprev = 0
-tcurr = 0
-tstart = time.perf_counter()
+# velCurr = 0
+# posCurr = 0
+# posLast = 0
+# tprev = 0
+# tcurr = 0
+# tstart = time.perf_counter()
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(in1,GPIO.OUT)
-GPIO.setup(in2,GPIO.OUT)
-GPIO.setup(en,GPIO.OUT)
-motor_fwd_pwm = GPIO.PWM(in1, 100)
-GPIO.output(in2,GPIO.LOW)
-# GPIO.output(in1,GPIO.HIGH)
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(in1,GPIO.OUT)
+# GPIO.setup(in2,GPIO.OUT)
+# GPIO.setup(en,GPIO.OUT)
+# motor_fwd_pwm = GPIO.PWM(in1, 100)
 # GPIO.output(in2,GPIO.LOW)
-p=GPIO.PWM(en,100)
-p.start(100)
-desiredV = 5
-output = desiredV
-motor_fwd_pwm.start(50)
+# # GPIO.output(in1,GPIO.HIGH)
+# # GPIO.output(in2,GPIO.LOW)
+# p=GPIO.PWM(en,100)
+# p.start(100)
+# desiredV = 5
+# output = desiredV
+# motor_fwd_pwm.start(50)
 
