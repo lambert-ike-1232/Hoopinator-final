@@ -74,6 +74,8 @@ def clipVelocity(vel, max_vel):
     return max(0, min(MAX_VEL, vel))
 	
 def set_motor_velocity(des_left_vel, des_right_vel, left_posCurr, right_posCurr, left_posLast, right_posLast, tcurr, tprev): # in rev/s
+    # TODO: Make this return control signal and move the sendString and serial reading to main loop
+
     global prevError_l
     global prevError_r
     global integral
@@ -153,8 +155,12 @@ if __name__ == '__main__':
         left_posCurr = encoder_left.steps
         right_posCurr = encoder_right.steps
 
-        set_motor_velocity(leftMotor, rightMotor, left_posCurr, right_posCurr, left_posLast, right_posLast, tcurr, tprev)
+        # set_motor_velocity(leftMotor, rightMotor, left_posCurr, right_posCurr, left_posLast, right_posLast, tcurr, tprev)
+        input("Press Enter to continue...")
+        currentState = RobotStates.DEAD_RECKNONING
+        sendString('/dev/ttyACM0',115200,'<'+str(0)+','+str(0)+ ',' + str(currentState.value)+'>',0.0001)
 
+        
         tprev = tcurr
         right_posLast = right_posCurr
         left_posLast = left_posCurr
