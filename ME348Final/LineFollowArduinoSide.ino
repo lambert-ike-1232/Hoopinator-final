@@ -16,6 +16,14 @@ int leftMotor=0; //int leftMotor
 int rightMotor=0;
 int isCross=0;
 
+// Line following state variables
+int crossesDetected = 0;
+unsigned long lastCrossTime = 0;
+bool lineFollowingComplete = false;
+#define CROSS_COOLDOWN_MS 1000  // Minimum time between cross detections
+#define LF_BASE_SPEED 150       // Base speed for line following
+#define LF_KP 0.05              // Proportional gain for line following
+
 boolean newData = false;
 
 //=====================================================
@@ -126,16 +134,23 @@ if ((sensorValues[7] > 500) && (sensorValues[0] > 500) || (sensorValues[2] > 500
       Serial.print(",");
       Serial.print(isCross);
       Serial.print(",");
+      Serial.print(crossesDetected);
+      Serial.print(",");
+      Serial.print(lineFollowingComplete);
+      Serial.print(",");
       Serial.print(leftMotor);
       Serial.print(",");
       Serial.println(rightMotor);
-      
+
       newData = false;
 
-      
+
       //sendDataToRpi(); //unused
-                   
+
     }
+
+    // Execute line following logic
+    executeLineFollowing();
 
     commandMotors(); //we want this to happen outside of our newdata=true loop so it is never blocked
    
@@ -209,6 +224,61 @@ void recvWithStartEndMarkers() {
             recvInProgress = true;
         }
     }
+}
+
+//==================================================================
+
+void executeLineFollowing() {
+  // If line following is already complete, keep motors stopped
+  if (lineFollowingComplete) {
+    leftMotor = 0;
+    rightMotor = 0;
+    return;
+  }
+
+  unsigned long currentMillis = millis();
+
+  // Detect crosses with cooldown to avoid double-counting
+  if (isCross == 1 && (currentMillis - lastCrossTime) > CROSS_COOLDOWN_MS) {
+    crossesDetected++;
+    lastCrossTime = currentMillis;
+
+    Serial.print(">>> CROSS DETECTED! Total crosses: ");
+    Serial.println(crossesDetected);
+
+    // If we've reached the second cross, stop
+    if (crossesDetected >= 2) {
+      leftMotor = 0;
+      rightMotor = 0;
+      lineFollowingComplete = true;
+      Serial.println(">>> LINE FOLLOWING COMPLETE! Stopped at second cross.");
+      return;
+    }
+  }
+
+  // Only execute line following if we have valid line position
+  if (linePosition > 0 && linePosition < 9000) {
+    // Line following PID control
+    // linePosition ranges from 1000 (far left) to 5000 (far right)
+    // Center is at 3000
+    int error = linePosition - 3000;
+
+    // Calculate motor speeds using proportional control
+    float correction = LF_KP * error;
+
+    leftMotor = LF_BASE_SPEED - correction;
+    rightMotor = LF_BASE_SPEED + correction;
+
+    // Constrain motor speeds to valid range
+    if (leftMotor > 400) leftMotor = 400;
+    if (leftMotor < -400) leftMotor = -400;
+    if (rightMotor > 400) rightMotor = 400;
+    if (rightMotor < -400) rightMotor = -400;
+  } else {
+    // No line detected - stop motors
+    leftMotor = 0;
+    rightMotor = 0;
+  }
 }
 
 //==================================================================

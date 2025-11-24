@@ -1,14 +1,15 @@
 /*
  * Standalone Line Following Test
- * 
+ *
  * This program tests ONLY the line following functionality in isolation.
  * It will:
  * 1. Calibrate the QTR sensors on startup
- * 2. Follow the line using PID control
+ * 2. Follow the line using proportional control
  * 3. Detect crosses and count them
  * 4. Stop at the second cross
  * 5. Send sensor data over serial for monitoring
- * 
+ *
+ * Based on working LineFollowArduinoSide.ino code
  * Upload this to test line following without needing the full system.
  */
 
@@ -37,21 +38,28 @@ int isCross = 0;
 int crossesDetected = 0;
 unsigned long lastCrossTime = 0;
 bool lineFollowingComplete = false;
+bool hasSeenFirstCross = false;
 
 // ========== SENSOR CALIBRATION ==========
 
 void calibrateSensors() {
+  // THE SENSORS ONLY CALIBRATE WHEN YOU UPLOAD NEW ARDUINO CODE TO THE ASTAR
+  // After that the sensors STAY calibrated as long as the Astar has power
+
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);
-  
+  digitalWrite(LED_BUILTIN, HIGH); // turn on Arduino's LED to indicate we are in calibration mode
+                                   // while calibrating, move the sensor over the line a couple times
+
   Serial.println("Calibrating... Move sensor over line for 10 seconds.");
-  
-  // Calibrate for 10 seconds
+
+  // 2.5 ms RC read timeout (default) * 10 reads per calibrate() call
+  // = ~25 ms per calibrate() call.
+  // Call calibrate() 400 times to make calibration take about 10 seconds.
   for (uint16_t i = 0; i < 400; i++) {
     qtr.calibrate();
   }
-  
-  digitalWrite(LED_BUILTIN, LOW);
+
+  digitalWrite(LED_BUILTIN, LOW); // turn off Arduino's LED to indicate we are through with calibration
   Serial.println("Calibration complete!");
 }
 
@@ -116,17 +124,18 @@ void readAndProcessLineSensors() {
 void executeLineFollowing() {
   // Read line sensors
   readAndProcessLineSensors();
-  
+
   unsigned long currentMillis = millis();
-  
+
   // Detect crosses with cooldown to avoid double-counting
   if (isCross == 1 && (currentMillis - lastCrossTime) > CROSS_COOLDOWN_MS) {
     crossesDetected++;
     lastCrossTime = currentMillis;
-    
+    hasSeenFirstCross = true;
+
     Serial.print(">>> CROSS DETECTED! Total crosses: ");
     Serial.println(crossesDetected);
-    
+
     // If we've reached the second cross, stop
     if (crossesDetected >= 2) {
       leftMotor = 0;
@@ -136,15 +145,24 @@ void executeLineFollowing() {
       return;
     }
   }
-  
-  // Line following PID control
+
+  // Don't start following until we're past the first cross
+  // This prevents false starts if robot is placed on a cross
+  if (!hasSeenFirstCross) {
+    // Just drive forward slowly until we see the first cross
+    leftMotor = 100;
+    rightMotor = 100;
+    return;
+  }
+
+  // Line following proportional control
   // linePosition ranges from 1000 (far left) to 5000 (far right)
   // Center is at 3000
   int error = linePosition - 3000;
-  
+
   // Calculate motor speeds using proportional control
-  int correction = LF_KP * error;
-  
+  float correction = LF_KP * error;
+
   leftMotor = LF_BASE_SPEED - correction;
   rightMotor = LF_BASE_SPEED + correction;
 
@@ -191,12 +209,17 @@ void publishSensorData() {
 // ========== SETUP ==========
 
 void setup() {
+  pinMode(3, OUTPUT); // left motor
+  pinMode(2, OUTPUT); // left motor
   Serial.begin(115200);
 
   // Setup QTR line sensors
-  qtr.setTypeRC();
+  qtr.setTypeRC(); // this allows us to read the line sensor from digital pins
+
+  // Arduino pin sensor names: 15, 16, 21, 18, 11, 22, 20, 14
+  // NOTE: PIN A1 DID NOT WORK WITH ANY SENSOR!!
+  // UNHOOK THE BLUE JUMPER LABELED BUZZER ON THE ASTAR or pin 6 will cause the buzzer to activate
   qtr.setSensorPins((const uint8_t[]){15, 16, 21, 18, 11, 22, 20, 14}, SensorCount);
-  qtr.setEmitterPin(4);
 
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -210,8 +233,12 @@ void setup() {
   // Calibrate sensors
   calibrateSensors();
 
+  qtr.setEmitterPin(4); // can get away with a single emitter pin providing power to both emitters
+  QTRReadMode::On; // emitters on measures active reflectance instead of ambient light levels
+
   Serial.println("=== READY TO FOLLOW LINE ===");
   Serial.println("Place robot on line and it will start following.");
+  Serial.println("<Arduino is ready>");
   delay(2000);
 }
 
