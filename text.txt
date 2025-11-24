@@ -1,0 +1,226 @@
+Arduino: 1.8.19 (Linux), Board: "Pololu A-Star 32U4"
+
+
+
+
+
+
+
+
+
+
+
+LineFollowArduinoSide:3:17: error: redefinition of ‘AStar32U4Motors m’
+ AStar32U4Motors m; //read the documentation of this library to understand what functions to use to drive the motors and how to use them
+                 ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:39:17: note: ‘AStar32U4Motors m’ previously declared here
+ AStar32U4Motors m;
+                 ^
+LineFollowArduinoSide:9:12: error: redefinition of ‘const byte numChars’
+ const byte numChars = 32;
+            ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:50:12: note: ‘const byte numChars’ previously defined here
+ const byte numChars = 32;
+            ^
+LineFollowArduinoSide:10:28: error: redefinition of ‘char receivedChars [32]’
+ char receivedChars[numChars];
+                            ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:51:6: note: ‘char receivedChars [32]’ previously declared here
+ char receivedChars[numChars];
+      ^
+LineFollowArduinoSide:11:23: error: redefinition of ‘char tempChar [32]’
+ char tempChar[numChars]; // temporary array used for parsing
+                       ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:52:6: note: ‘char tempChar [32]’ previously declared here
+ char tempChar[numChars];  // temporary array used for parsing
+      ^
+LineFollowArduinoSide:15:5: error: redefinition of ‘int leftMotor’
+ int leftMotor=0; //int leftMotor
+     ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:44:5: note: ‘int leftMotor’ previously defined here
+ int leftMotor = 0;
+     ^
+LineFollowArduinoSide:16:5: error: redefinition of ‘int rightMotor’
+ int rightMotor=0;
+     ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:45:5: note: ‘int rightMotor’ previously defined here
+ int rightMotor = 0;
+     ^
+LineFollowArduinoSide:27:9: error: redefinition of ‘boolean newData’
+ boolean newData = false;
+         ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:53:9: note: ‘boolean newData’ previously defined here
+ boolean newData = false;
+         ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino: In function ‘void setup()’:
+LineFollowArduinoSide:31:6: error: redefinition of ‘void setup()’
+ void setup() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:274:6: note: ‘void setup()’ previously defined here
+ void setup() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino: In function ‘void loop()’:
+LineFollowArduinoSide:50:6: error: redefinition of ‘void loop()’
+ void loop() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:287:6: note: ‘void loop()’ previously defined here
+ void loop() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino: In function ‘void parseData()’:
+LineFollowArduinoSide:163:6: error: redefinition of ‘void parseData()’
+ void parseData(){
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:169:6: note: ‘void parseData()’ previously defined here
+ void parseData() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino: In function ‘void commandMotors()’:
+LineFollowArduinoSide:187:6: error: redefinition of ‘void commandMotors()’
+ void commandMotors(){
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:421:6: note: ‘void commandMotors()’ previously defined here
+ void commandMotors() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino: In function ‘void recvWithStartEndMarkers()’:
+LineFollowArduinoSide:196:6: error: redefinition of ‘void recvWithStartEndMarkers()’
+ void recvWithStartEndMarkers() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:89:6: note: ‘void recvWithStartEndMarkers()’ previously defined here
+ void recvWithStartEndMarkers() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowingTest.ino: At global scope:
+LineFollowingTest:19:17: error: redefinition of ‘AStar32U4Motors m’
+ AStar32U4Motors m;
+                 ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:39:17: note: ‘AStar32U4Motors m’ previously declared here
+ AStar32U4Motors m;
+                 ^
+LineFollowingTest:20:12: error: redefinition of ‘QTRSensors qtr’
+ QTRSensors qtr;
+            ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:4:12: note: ‘QTRSensors qtr’ previously defined here
+ QTRSensors qtr;
+            ^
+LineFollowingTest:23:15: error: redefinition of ‘const uint8_t SensorCount’
+ const uint8_t SensorCount = 8;
+               ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:5:15: note: ‘const uint8_t SensorCount’ previously defined here
+ const uint8_t SensorCount = 8;
+               ^
+LineFollowingTest:24:34: error: redefinition of ‘uint16_t sensorValues [8]’
+ uint16_t sensorValues[SensorCount];
+                                  ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:6:10: note: ‘uint16_t sensorValues [8]’ previously declared here
+ uint16_t sensorValues[SensorCount];
+          ^
+LineFollowingTest:25:10: error: redefinition of ‘uint16_t linePosition’
+ uint16_t linePosition = 3500;
+          ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:7:10: note: ‘uint16_t linePosition’ previously defined here
+ uint16_t linePosition = 3500;
+          ^
+LineFollowingTest:28:5: error: redefinition of ‘int leftMotor’
+ int leftMotor = 0;
+     ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:44:5: note: ‘int leftMotor’ previously defined here
+ int leftMotor = 0;
+     ^
+LineFollowingTest:29:5: error: redefinition of ‘int rightMotor’
+ int rightMotor = 0;
+     ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:45:5: note: ‘int rightMotor’ previously defined here
+ int rightMotor = 0;
+     ^
+LineFollowingTest:37:5: error: redefinition of ‘int isCross’
+ int isCross = 0;
+     ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:17:5: note: ‘int isCross’ previously defined here
+ int isCross=0;
+     ^
+LineFollowingTest:38:5: error: redefinition of ‘int crossesDetected’
+ int crossesDetected = 0;
+     ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:20:5: note: ‘int crossesDetected’ previously defined here
+ int crossesDetected = 0;
+     ^
+LineFollowingTest:39:15: error: redefinition of ‘long unsigned int lastCrossTime’
+ unsigned long lastCrossTime = 0;
+               ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:21:15: note: ‘long unsigned int lastCrossTime’ previously defined here
+ unsigned long lastCrossTime = 0;
+               ^
+LineFollowingTest:40:6: error: redefinition of ‘bool lineFollowingComplete’
+ bool lineFollowingComplete = false;
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:22:6: note: ‘bool lineFollowingComplete’ previously defined here
+ bool lineFollowingComplete = false;
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowingTest.ino: In function ‘void calibrateSensors()’:
+LineFollowingTest:45:6: error: redefinition of ‘void calibrateSensors()’
+ void calibrateSensors() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:286:6: note: ‘void calibrateSensors()’ previously defined here
+ void calibrateSensors(){
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowingTest.ino: In function ‘void executeLineFollowing()’:
+LineFollowingTest:124:6: error: redefinition of ‘void executeLineFollowing()’
+ void executeLineFollowing() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowArduinoSide.ino:231:6: note: ‘void executeLineFollowing()’ previously defined here
+ void executeLineFollowing() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowingTest.ino: In function ‘void commandMotors()’:
+LineFollowingTest:176:6: error: redefinition of ‘void commandMotors()’
+ void commandMotors() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:421:6: note: ‘void commandMotors()’ previously defined here
+ void commandMotors() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowingTest.ino: In function ‘void stopMotors()’:
+LineFollowingTest:181:6: error: redefinition of ‘void stopMotors()’
+ void stopMotors() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:122:6: note: ‘void stopMotors()’ previously defined here
+ void stopMotors() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowingTest.ino: In function ‘void publishSensorData()’:
+LineFollowingTest:189:6: error: redefinition of ‘void publishSensorData()’
+ void publishSensorData() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:76:6: note: ‘void publishSensorData()’ previously defined here
+ void publishSensorData() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowingTest.ino: In function ‘void setup()’:
+LineFollowingTest:211:6: error: redefinition of ‘void setup()’
+ void setup() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:274:6: note: ‘void setup()’ previously defined here
+ void setup() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/LineFollowingTest.ino: In function ‘void loop()’:
+LineFollowingTest:247:6: error: redefinition of ‘void loop()’
+ void loop() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:287:6: note: ‘void loop()’ previously defined here
+ void loop() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/servotest.ino: In function ‘void setup()’:
+servotest:12:6: error: redefinition of ‘void setup()’
+ void setup() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:274:6: note: ‘void setup()’ previously defined here
+ void setup() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/servotest.ino: In function ‘void loop()’:
+servotest:23:6: error: redefinition of ‘void loop()’
+ void loop() {
+      ^
+/home/hoopinator/Downloads/Hoopinator-final/ME348Final/ME348Final.ino:287:6: note: ‘void loop()’ previously defined here
+ void loop() {
+      ^
+exit status 1
+redefinition of ‘AStar32U4Motors m’
+
+
+This report would have more information with
+"Show verbose output during compilation"
+option enabled in File -> Preferences.
