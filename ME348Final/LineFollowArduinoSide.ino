@@ -37,7 +37,7 @@ void setup() {
     //arduino pin sensornames I am using: 7, 18, 23 aka A5. note:PIN A1 DID NOT WORK WITH ANY SENSOR!!, 20, 21, 22, 8, 6. UNHOOK THE BLUE JUMPER LABELED BUZZER ON THE ASTAR or pin 6 will cause the buzzer to activate.
 //    qtr.setEmitterPins(4, 5);
 //     QTRReadMode::On;
-    qtr.setSensorPins((const uint8_t[]){15, 16, 21, 18, 11, 22, 20, 14}, SensorCount);
+    qtr.setSensorPins((const uint8_t[]){15, 16, 21, 18, A5, A4, A2, 14}, SensorCount);
 
     calibrateSensors();
     qtr.setEmitterPin(4); //can get away with a single emitter pin providing power to both emitters

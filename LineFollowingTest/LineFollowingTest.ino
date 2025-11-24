@@ -213,18 +213,25 @@ void setup() {
   pinMode(2, OUTPUT); // left motor
   Serial.begin(115200);
 
-  // Setup QTR line sensors
-  qtr.setTypeRC(); // this allows us to read the line sensor from digital pins
+  // Setup QTRX line sensors
+  // IMPORTANT: QTRX sensors use RC (digital) mode, not analog
+  qtr.setTypeRC();
 
-  // Arduino pin sensor names: 15, 16, 21, 18, 11, 22, 20, 14
-  // NOTE: PIN A1 DID NOT WORK WITH ANY SENSOR!!
-  // UNHOOK THE BLUE JUMPER LABELED BUZZER ON THE ASTAR or pin 6 will cause the buzzer to activate
-  qtr.setSensorPins((const uint8_t[]){15, 16, 21, 18, 11, 22, 20, 14}, SensorCount);
+  // QTRX Sensor Array pin configuration for TI-RSLK / A-Star
+  // Sensors 0-7 connect to these pins:
+  // NOTE: REMOVE THE BUZZER JUMPER ON THE A-STAR!
+  qtr.setSensorPins((const uint8_t[]){7, 18, 23, 20, 21, 22, 8, 7}, SensorCount);
+
+  // QTRX has TWO emitter control pins
+  // CTRL EVEN (pin 5) controls sensors 0, 2, 4, 6
+  // CTRL ODD (pin 4) controls sensors 1, 3, 5, 7
+  qtr.setEmitterPins(5, 4); // (CTRL_EVEN, CTRL_ODD)
 
   pinMode(LED_BUILTIN, OUTPUT);
 
   // Wait 5 seconds before calibration
-  Serial.println("=== LINE FOLLOWING TEST ===");
+  Serial.println("=== LINE FOLLOWING TEST (QTRX) ===");
+  Serial.println("IMPORTANT: Remove BUZZER jumper!");
   Serial.println("Starting in 5 seconds...");
   digitalWrite(LED_BUILTIN, HIGH);
   delay(5000);
@@ -232,9 +239,6 @@ void setup() {
 
   // Calibrate sensors
   calibrateSensors();
-
-  qtr.setEmitterPin(4); // can get away with a single emitter pin providing power to both emitters
-  QTRReadMode::On; // emitters on measures active reflectance instead of ambient light levels
 
   Serial.println("=== READY TO FOLLOW LINE ===");
   Serial.println("Place robot on line and it will start following.");
